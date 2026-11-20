@@ -1,0 +1,153 @@
+@import "tailwindcss";
+
+/* `dark:` utilities activate when <html data-theme="dark"> */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* Design tokens (light theme) — generates utilities like bg-bg, text-ink,
+   text-accent, bg-surface, border-line, from-shade-1, font-display */
+@theme {
+  --color-bg: #f8f8f6;
+  --color-ink: #1a1a1a;
+  --color-muted: #6b6b6b;
+  --color-accent: #ff3b1d;
+  --color-surface: #ffffff;
+  --color-line: rgba(0, 0, 0, 0.1);
+  --color-shade-1: #efeee9;
+  --color-shade-2: #dcdad3;
+  --color-cisco: #0070b8;
+}
+
+@theme inline {
+  --font-sans: var(--font-jakarta);
+  --font-display: var(--font-anton);
+}
+
+/* Dark theme — same token names, so every utility switches automatically */
+[data-theme="dark"] {
+  --color-bg: #0f0f0e;
+  --color-ink: #edece8;
+  --color-muted: #9b9a95;
+  --color-accent: #ff3b1d;
+  --color-surface: #181816;
+  --color-line: rgba(255, 255, 255, 0.1);
+  --color-shade-1: #1f1f1d;
+  --color-shade-2: #2b2b28;
+  --color-cisco: #4cb4ef;
+}
+
+:root {
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+html {
+  background: var(--color-bg);
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #ffffff;
+}
+
+/* Theme-aware ink → accent color. Framer Motion springs `--mix` from 0 to 1;
+   clamp() keeps spring overshoot from producing an invalid percentage. */
+.accent-mix {
+  color: color-mix(
+    in srgb,
+    var(--color-accent) calc(clamp(0, var(--mix, 0), 1) * 100%),
+    var(--color-ink)
+  );
+}
+
+/* Custom cursor (components/Cursor.tsx) — hide the native one while it's active,
+   but keep the I-beam in text fields */
+html.custom-cursor,
+html.custom-cursor * {
+  cursor: none !important;
+}
+html.custom-cursor :is(input, textarea, [contenteditable="true"]) {
+  cursor: text !important;
+}
+
+/* The preloader already played in this tab (components/Preloader.tsx) — never paint it */
+html[data-intro-seen] .preloader {
+  display: none;
+}
+
+/* Ambient background glow (app/page.tsx) — a soft aurora rising from the bottom
+   edge, in the style of "dark gradient" packs, built from the accent color.
+   It sits behind everything; <body> is `isolate` so it paints above the body's bg. */
+.bg-glow {
+  --glow: 0.3; /* light theme strength */
+  --glow-warm: #ff8a3d; /* accent's warmer neighbor */
+  --glow-deep: #d6143c; /* accent's deeper neighbor */
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+[data-theme="dark"] .bg-glow {
+  --glow: 0.5;
+}
+.bg-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0 -12%;
+  background:
+    radial-gradient(38% 42% at 22% 108%, color-mix(in srgb, var(--color-accent) calc(var(--glow) * 100%), transparent), transparent 72%),
+    radial-gradient(32% 34% at 58% 112%, color-mix(in srgb, var(--glow-warm) calc(var(--glow) * 85%), transparent), transparent 72%),
+    radial-gradient(30% 36% at 88% 106%, color-mix(in srgb, var(--glow-deep) calc(var(--glow) * 90%), transparent), transparent 72%);
+  animation: glow-drift 26s ease-in-out infinite alternate;
+}
+@keyframes glow-drift {
+  from {
+    transform: translate3d(-4%, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(4%, -3%, 0) scale(1.06);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bg-glow::before {
+    animation: none;
+  }
+}
+
+/* Lottie icons (components/MailLottie.tsx) take the surrounding text color.
+   Only the visible artwork (svg > g) is recolored; masks/mattes live in <defs>
+   and must keep their original fills. */
+.lottie-ink > svg > g path {
+  fill: currentColor;
+}
+/* Let pop-in overshoot spill past the icon box instead of being clipped flat */
+.lottie-ink > svg {
+  overflow: visible;
+}
+
+/* Printing (/resume): one clean A4 sheet, no page margins from the browser */
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  html,
+  body {
+    background: #ffffff !important;
+  }
+}
+
+/* Theme switch: a circular reveal driven from ThemeToggle via the View Transitions API */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}

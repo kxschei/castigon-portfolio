@@ -1,0 +1,242 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion, type Variants } from "framer-motion";
+import { useLenis } from "lenis/react";
+import Image from "next/image";
+import AnimatedIcon from "@/components/AnimatedIcon";
+import { EASE_OUT, getIntroDelay, profile, socials } from "@/lib/data";
+
+const GREETING = "Hi, I'm";
+
+// Badge above the name: "Available for <word>", cycling through these
+const AVAILABLE_FOR = ["internships", "opportunities"];
+const WORD_MS = 2600;
+
+/** Cycles through `words`, each one sliding up into place. */
+function RotatingWord({ words }: { words: string[] }) {
+  const [i, setI] = useState(0);
+  const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    const t = setInterval(() => setI((n) => (n + 1) % words.length), WORD_MS);
+    return () => clearInterval(t);
+  }, [words.length]);
+
+  const offset = reduceMotion ? "0%" : "100%";
+  return (
+    <span className="inline-block overflow-hidden align-bottom">
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.span
+          key={words[i]}
+          className="inline-block"
+          initial={{ y: offset, opacity: 0 }}
+          animate={{ y: "0%", opacity: 1 }}
+          exit={{ y: reduceMotion ? "0%" : "-100%", opacity: 0 }}
+          transition={{ duration: 0.3, ease: EASE_OUT }}
+        >
+          {words[i]}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  );
+}
+// One line per name word, e.g. Cedrex / Castigon.
+const NAME_LINES = `${profile.name}.`.split(" ");
+
+const STAGGER = 0.04;
+// Highlighter swipes in once every letter has risen.
+const LETTER_COUNT = (GREETING + NAME_LINES.join("")).replace(/ /g, "").length;
+const highlightDelay = (intro: number) => intro + LETTER_COUNT * STAGGER + 0.5;
+
+const container = (intro: number): Variants => ({
+  hidden: {},
+  show: {
+    transition: { staggerChildren: STAGGER, delayChildren: intro },
+  },
+});
+
+const letter: Variants = {
+  hidden: { y: "110%" },
+  show: { y: "0%", transition: { duration: 0.8, ease: EASE_OUT } },
+};
+
+// Name letters also carry `--mix` (ink → accent blend, see .accent-mix in globals.css)
+const nameLetter: Variants = {
+  hidden: { y: "110%", "--mix": 0 },
+  show: { y: "0%", "--mix": 0, transition: { duration: 0.8, ease: EASE_OUT } },
+};
+
+const letterHover = {
+  y: "-14%",
+  "--mix": 1,
+  transition: { type: "spring", stiffness: 500, damping: 14 },
+} as const;
+
+/** Splits text into letters that rise from below; `interactive` letters hop + turn red on hover. */
+function Letters({ text, interactive = false }: { text: string; interactive?: boolean }) {
+  return text.split(" ").map((word, w) => (
+    <span key={w} className="mr-[0.22em] inline-block whitespace-nowrap last:mr-0">
+      {word.split("").map((char, c) => (
+        // Extra top padding gives hovering letters room to hop without being clipped
+        <span
+          key={c}
+          className="-mt-[0.16em] inline-block overflow-hidden pb-[0.06em] pt-[0.16em] align-bottom"
+        >
+          <motion.span
+            variants={interactive ? nameLetter : letter}
+            whileHover={interactive ? letterHover : undefined}
+            className={`inline-block ${
+              char === "." ? "text-accent" : interactive ? "accent-mix" : ""
+            }`}
+          >
+            {char}
+          </motion.span>
+        </span>
+      ))}
+    </span>
+  ));
+}
+
+const fadeUp = (delay: number) => ({
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.8, ease: EASE_OUT, delay },
+});
+
+export default function Hero() {
+  const lenis = useLenis();
+  // Shorter when the preloader was skipped (already seen this session)
+  const [introDelay] = useState(getIntroDelay);
+
+  return (
+    <section
+      id="top"
+      className="mx-auto grid min-h-svh max-w-6xl items-center gap-12 px-4 pb-16 pt-28 sm:px-6 md:grid-cols-[1.3fr_1fr] md:pt-16"
+    >
+      {/* Left: cinematic headline */}
+      <div>
+        <motion.p
+          className="mb-6 flex items-center gap-2 text-sm font-medium text-muted"
+          {...fadeUp(introDelay)}
+        >
+          <span className="size-2 rounded-full bg-accent" />
+          <span className="sr-only">Available for {AVAILABLE_FOR.join(" and ")}</span>
+          <span aria-hidden className="flex">
+            Available for&nbsp;
+            <RotatingWord words={AVAILABLE_FOR} />
+          </span>
+        </motion.p>
+
+        <motion.h1
+          aria-label={`${GREETING} ${profile.name}.`}
+          className="font-display text-[17vw] uppercase leading-[0.9] tracking-tight sm:text-8xl md:text-[8vw] xl:text-[7.5rem]"
+          variants={container(introDelay)}
+          initial="hidden"
+          animate="show"
+        >
+          <span className="block" aria-hidden>
+            <Letters text={GREETING} />
+          </span>
+
+          {NAME_LINES.map((line, i) => (
+            <span key={line} className="block" aria-hidden>
+              <span className="group/name relative isolate inline-block cursor-default">
+                {/* Highlighter: swipes in after the reveal, fills the line on hover */}
+                <motion.span
+                  className="absolute -inset-x-[0.06em] bottom-[0.1em] -z-10 h-[38%] origin-left rounded-[0.06em] bg-accent/20 transition-[height] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/name:h-[86%] dark:bg-accent/30"
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: 0.9, ease: EASE_OUT, delay: highlightDelay(introDelay) + i * 0.15 }}
+                />
+                <Letters text={line} interactive />
+              </span>
+            </span>
+          ))}
+        </motion.h1>
+
+        <motion.p
+          className="mt-6 max-w-md text-lg text-muted sm:text-xl"
+          {...fadeUp(introDelay + 0.7)}
+        >
+          {profile.role}
+        </motion.p>
+
+        <motion.div className="mt-10 flex flex-wrap gap-3" {...fadeUp(introDelay + 0.85)}>
+          <motion.a
+            href="#projects"
+            onClick={(e) => {
+              if (!lenis) return;
+              e.preventDefault();
+              lenis.scrollTo("#projects", { offset: -80 });
+            }}
+            className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white shadow-sm"
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ type: "spring", stiffness: 400, damping: 20 }}
+          >
+            View Projects
+          </motion.a>
+          <motion.a
+            href="#contact"
+            onClick={(e) => {
+              if (!lenis) return;
+              e.preventDefault();
+              lenis.scrollTo("#contact", { offset: -80 });
+            }}
+            className="rounded-full border border-line bg-surface px-6 py-3 text-sm font-semibold"
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ type: "spring", stiffness: 400, damping: 20 }}
+          >
+            Get in touch
+          </motion.a>
+        </motion.div>
+
+        {/* Social links */}
+        <motion.ul className="mt-6 flex gap-3" {...fadeUp(introDelay + 1)}>
+          {socials.map(({ label, href, icon: Icon, animatedIcon }) => {
+            const external = href.startsWith("http");
+            return (
+              <li key={label}>
+                <motion.a
+                  href={href}
+                  aria-label={label}
+                  title={label}
+                  {...(external && { target: "_blank", rel: "noopener noreferrer" })}
+                  className="flex size-11 items-center justify-center rounded-xl border border-line bg-surface/60 text-muted shadow-sm transition-colors duration-300 hover:border-accent/50 hover:text-accent"
+                  whileHover={{ y: -3 }}
+                  whileTap={{ scale: 0.94 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 18 }}
+                >
+                  {animatedIcon ? (
+                    <AnimatedIcon name={animatedIcon} className="size-[22px]" />
+                  ) : (
+                    <Icon className="size-[18px]" aria-hidden />
+                  )}
+                </motion.a>
+              </li>
+            );
+          })}
+        </motion.ul>
+      </div>
+
+      {/* Right: portrait */}
+      <motion.div
+        className="group relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-2xl border border-line bg-white shadow-md"
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1.2, ease: EASE_OUT, delay: introDelay + 0.3 }}
+      >
+        <Image
+          src="/profile-hd.png"
+          alt={`Portrait of ${profile.name}`}
+          fill
+          priority
+          sizes="(min-width: 768px) 384px, 90vw"
+          className="object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
+        />
+      </motion.div>
+    </section>
+  );
+}
