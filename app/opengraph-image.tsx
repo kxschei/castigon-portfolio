@@ -42,7 +42,8 @@ export default function Image() {
           fontFamily: "Plus Jakarta Sans",
         }}
       >
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        {/* Text column is capped so a long role line wraps instead of pushing the photo off */}
+        <div style={{ display: "flex", flexDirection: "column", maxWidth: 660 }}>
           <div
             style={{
               display: "flex",
@@ -61,12 +62,13 @@ export default function Image() {
             </div>
           </div>
 
-          <div style={{ marginTop: 30, fontSize: 34, color: MUTED }}>{profile.role}</div>
+          <div style={{ marginTop: 30, fontSize: 34, lineHeight: 1.3, color: MUTED }}>{profile.role}</div>
         </div>
 
         <div
           style={{
             display: "flex",
+            flexShrink: 0,
             width: 300,
             height: 375,
             borderRadius: 24,

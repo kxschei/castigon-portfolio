@@ -43,7 +43,7 @@ export const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 
 export const profile = {
   name: "Cedrex Castigon",
-  role: "2nd Year BSIT Student & Aspiring Developer.",
+  role: "Information Technology Student & Aspiring Developer",
   email: "castigonlloyd@gmail.com",
   /** Shown in the footer next to the copyright. */
   motto: "From fixing PCs to building software, one problem at a time.",
