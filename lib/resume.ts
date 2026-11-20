@@ -10,8 +10,7 @@ export const resume = {
   contact: {
     email: profile.email,
     location: "Davao City, Philippines",
-    github: "github.com/kxschei",
-    facebook: "facebook.com/ishhtea",
+    phone: "09703919609",
   },
 
   summary:

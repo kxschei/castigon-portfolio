@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { LuArrowLeft, LuDownload, LuFacebook, LuGithub, LuMail, LuMapPin, LuPrinter } from "react-icons/lu";
+import { LuArrowLeft, LuDownload, LuMail, LuMapPin, LuPhone, LuPrinter } from "react-icons/lu";
 import { resume } from "@/lib/resume";
 
 /**
@@ -96,20 +96,17 @@ export default function ResumeDocument() {
           <p className="mt-1.5 text-[12px] text-neutral-700">{resume.tagline}</p>
           <ul className="mt-2.5 flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-[10.5px] text-neutral-700">
             <li className="flex items-center gap-1.5">
+              <LuPhone className="size-3 text-neutral-900" aria-hidden />
+              {/* Philippine mobile: 09XX… locally, +63 9XX… internationally */}
+              <a href={`tel:+63${contact.phone.replace(/^0/, "")}`}>{contact.phone}</a>
+            </li>
+            <li className="flex items-center gap-1.5">
               <LuMail className="size-3 text-neutral-900" aria-hidden />
               <a href={`mailto:${contact.email}`}>{contact.email}</a>
             </li>
             <li className="flex items-center gap-1.5">
               <LuMapPin className="size-3 text-neutral-900" aria-hidden />
               {contact.location}
-            </li>
-            <li className="flex items-center gap-1.5">
-              <LuGithub className="size-3 text-neutral-900" aria-hidden />
-              <a href={`https://${contact.github}`}>{contact.github}</a>
-            </li>
-            <li className="flex items-center gap-1.5">
-              <LuFacebook className="size-3 text-neutral-900" aria-hidden />
-              <a href={`https://www.${contact.facebook}`}>{contact.facebook}</a>
             </li>
           </ul>
         </header>
