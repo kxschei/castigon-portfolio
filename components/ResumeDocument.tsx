@@ -8,14 +8,25 @@ import { resume } from "@/lib/resume";
  * Section: bold, letter-spaced uppercase heading. Sections after the first are
  * separated by a thin grey rule (the header has its own thick rule).
  */
-function Section({ title, first = false, children }: { title: string; first?: boolean; children: React.ReactNode }) {
+function Section({
+  title,
+  first = false,
+  tight = false,
+  children,
+}: {
+  title: string;
+  first?: boolean;
+  /** Closer rows in print, for one-line entries */
+  tight?: boolean;
+  children: React.ReactNode;
+}) {
   return (
     <section
       className={`break-inside-avoid-page ${first ? "mt-3.5" : "mt-3.5 border-t border-neutral-300 pt-3"} print:mt-2.5 ${first ? "" : "print:pt-2"}`}
     >
       <h2 className="text-[13px] font-extrabold uppercase tracking-[0.12em]">{title}</h2>
       {/* Slightly tighter in print so everything fits on one A4 page */}
-      <div className="mt-1.5 space-y-2 print:space-y-1.5">{children}</div>
+      <div className={`mt-1.5 space-y-2 ${tight ? "print:space-y-1" : "print:space-y-1.5"}`}>{children}</div>
     </section>
   );
 }
@@ -123,14 +134,14 @@ export default function ResumeDocument() {
           ))}
         </Section>
 
-        <Section title="Certifications">
+        <Section title="Certifications" tight>
           {resume.certifications.map((c) => (
             <CertEntry key={c.title} title={c.title} issuer={c.issuer} date={c.date} />
           ))}
         </Section>
 
         <Section title="Skills">
-          <ul className="grid grid-cols-2 gap-x-6 gap-y-1 text-[10.5px] text-neutral-700 sm:grid-cols-3">
+          <ul className="grid grid-cols-2 gap-x-6 gap-y-1 text-[10.5px] text-neutral-700 sm:grid-cols-3 print:gap-y-0.5">
             {resume.skills.map((s) => (
               <li key={s} className="flex gap-2">
                 <span aria-hidden>•</span>

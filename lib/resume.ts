@@ -15,7 +15,7 @@ export const resume = {
   },
 
   summary:
-    "2nd-year BSIT student at Holy Cross of Davao College, passionate about building practical software solutions and exploring UI/UX design. Brings hands-on technical experience from managing the technical side of a family computer shop, from assembling PCs to troubleshooting and repairing hardware, and applies that same problem-solving mindset to web, mobile, and software development.",
+    "I am an Information Technology student at Holy Cross of Davao College with a passion for building practical software solutions and exploring UI/UX design. I have hands-on experience managing the technical side of a family computer shop, from assembling PCs to troubleshooting and repairing hardware. I apply that same problem-solving mindset to web, mobile, and software development while continuously improving my technical skills through academic projects and real-world experience.",
 
   education: [
     {
