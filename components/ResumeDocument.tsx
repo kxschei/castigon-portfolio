@@ -115,7 +115,7 @@ export default function ResumeDocument() {
           ))}
         </Section>
 
-        <Section title="Work Experience">
+        <Section title="Projects & Experience">
           {resume.experience.map((e) => (
             <Entry key={e.title} meta={[e.subtitle, e.period]} title={e.title}>
               {e.description}
