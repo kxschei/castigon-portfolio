@@ -39,9 +39,9 @@ export default function Footer() {
               viewport={{ once: true }}
               transition={{ duration: 0.9, ease: EASE_OUT }}
             >
-              Let&apos;s build
+              Drop me
               <br />
-              something<span className="text-accent">.</span>
+              a ping<span className="text-accent">.</span>
             </motion.h2>
 
             <motion.p
@@ -51,8 +51,8 @@ export default function Footer() {
               viewport={{ once: true }}
               transition={{ duration: 0.8, ease: EASE_OUT, delay: 0.1 }}
             >
-              Have a project, an internship opportunity, or just want to say hi? Send me a
-              message and I&apos;ll get back to you.
+              Got an internship, a project idea, or a PC that won&apos;t boot? Send me a message
+              and I&apos;ll get back to you.
             </motion.p>
 
             {/* Contact information cards */}
