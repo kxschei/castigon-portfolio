@@ -43,16 +43,10 @@ export default function Image() {
         }}
       >
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 14, fontSize: 26, color: MUTED }}>
-            <div style={{ width: 12, height: 12, borderRadius: 999, background: ACCENT }} />
-            Available for internships & opportunities
-          </div>
-
           <div
             style={{
               display: "flex",
               flexDirection: "column",
-              marginTop: 28,
               fontFamily: "Anton",
               fontSize: 148,
               lineHeight: 0.95,

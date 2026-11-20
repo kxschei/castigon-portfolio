@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion, type Variants } from "framer-motion";
+import { useState } from "react";
+import { motion, type Variants } from "framer-motion";
 import { useLenis } from "lenis/react";
 import Image from "next/image";
 import AnimatedIcon from "@/components/AnimatedIcon";
@@ -9,38 +9,6 @@ import { EASE_OUT, getIntroDelay, profile, socials } from "@/lib/data";
 
 const GREETING = "Hi, I'm";
 
-// Badge above the name: "Available for <word>", cycling through these
-const AVAILABLE_FOR = ["internships", "opportunities"];
-const WORD_MS = 2600;
-
-/** Cycles through `words`, each one sliding up into place. */
-function RotatingWord({ words }: { words: string[] }) {
-  const [i, setI] = useState(0);
-  const reduceMotion = useReducedMotion();
-
-  useEffect(() => {
-    const t = setInterval(() => setI((n) => (n + 1) % words.length), WORD_MS);
-    return () => clearInterval(t);
-  }, [words.length]);
-
-  const offset = reduceMotion ? "0%" : "100%";
-  return (
-    <span className="inline-block overflow-hidden align-bottom">
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.span
-          key={words[i]}
-          className="inline-block"
-          initial={{ y: offset, opacity: 0 }}
-          animate={{ y: "0%", opacity: 1 }}
-          exit={{ y: reduceMotion ? "0%" : "-100%", opacity: 0 }}
-          transition={{ duration: 0.3, ease: EASE_OUT }}
-        >
-          {words[i]}
-        </motion.span>
-      </AnimatePresence>
-    </span>
-  );
-}
 // One line per name word, e.g. Cedrex / Castigon.
 const NAME_LINES = `${profile.name}.`.split(" ");
 
@@ -116,18 +84,6 @@ export default function Hero() {
     >
       {/* Left: cinematic headline */}
       <div>
-        <motion.p
-          className="mb-6 flex items-center gap-2 text-sm font-medium text-muted"
-          {...fadeUp(introDelay)}
-        >
-          <span className="size-2 rounded-full bg-accent" />
-          <span className="sr-only">Available for {AVAILABLE_FOR.join(" and ")}</span>
-          <span aria-hidden className="flex">
-            Available for&nbsp;
-            <RotatingWord words={AVAILABLE_FOR} />
-          </span>
-        </motion.p>
-
         <motion.h1
           aria-label={`${GREETING} ${profile.name}.`}
           className="font-display text-[17vw] uppercase leading-[0.9] tracking-tight sm:text-8xl md:text-[8vw] xl:text-[7.5rem]"
