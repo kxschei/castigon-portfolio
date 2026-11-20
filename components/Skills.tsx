@@ -75,7 +75,7 @@ function SkillCard({
 export default function Skills() {
   return (
     <section id="skills" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-24 sm:px-6">
-      <SectionHeading number="02" title="Skills & Technologies" />
+      <SectionHeading number="02" title="TechStack" />
 
       <div className="grid gap-4 md:grid-cols-2">
         {skillGroups.map((group, i) => (
