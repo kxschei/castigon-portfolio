@@ -67,20 +67,7 @@ body {
   );
 }
 
-/* Custom cursor (components/Cursor.tsx) — hide the native one while it's active,
-   but keep the I-beam in text fields */
-html.custom-cursor,
-html.custom-cursor * {
-  cursor: none !important;
-}
-html.custom-cursor :is(input, textarea, [contenteditable="true"]) {
-  cursor: text !important;
-}
 
-/* The preloader already played in this tab (components/Preloader.tsx) — never paint it */
-html[data-intro-seen] .preloader {
-  display: none;
-}
 
 /* Ambient background glow (app/page.tsx) — a soft aurora rising from the bottom
    edge, in the style of "dark gradient" packs, built from the accent color.

@@ -1,4 +1,3 @@
-import Preloader from "@/components/Preloader";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import BentoAbout from "@/components/BentoAbout";
@@ -14,7 +13,6 @@ export default function Home() {
     <>
       {/* Ambient accent glow behind the whole page (styles: .bg-glow in globals.css) */}
       <div aria-hidden className="bg-glow print:hidden" />
-      <Preloader />
       <Navbar />
       <main className="overflow-x-clip">
         <Hero />

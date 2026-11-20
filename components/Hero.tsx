@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import { motion, type Variants } from "framer-motion";
 import { useLenis } from "lenis/react";
 import Image from "next/image";
 import AnimatedIcon from "@/components/AnimatedIcon";
-import { EASE_OUT, getIntroDelay, profile, socials } from "@/lib/data";
+import { EASE_OUT, INTRO_DELAY, profile, socials } from "@/lib/data";
 
 const GREETING = "Hi, I'm";
 
@@ -74,8 +73,7 @@ const fadeUp = (delay: number) => ({
 
 export default function Hero() {
   const lenis = useLenis();
-  // Shorter when the preloader was skipped (already seen this session)
-  const [introDelay] = useState(getIntroDelay);
+  const introDelay = INTRO_DELAY;
 
   return (
     <section

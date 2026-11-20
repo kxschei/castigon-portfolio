@@ -33,17 +33,8 @@ import { VscVscode } from "react-icons/vsc";
 
 // ---------- Motion / theme constants ----------
 
-/** Session flag: the preloader has played in this tab, so later loads skip it.
- *  Set by Preloader; mirrored onto <html data-intro-seen> by the inline script in app/layout.tsx. */
-export const INTRO_SEEN_KEY = "intro-seen";
-
-/** Seconds before intro animations start: after the full preloader (counts for 2s,
- *  then wipes), or almost immediately when it was skipped. Call it at mount in client
- *  components; on the server it returns the full delay (only used for animation timing). */
-export function getIntroDelay() {
-  if (typeof document === "undefined") return 2.5;
-  return document.documentElement.hasAttribute("data-intro-seen") ? 0.2 : 2.5;
-}
+/** Seconds before the hero and navbar entrance animations start. */
+export const INTRO_DELAY = 0.2;
 
 /** Cinematic ease-out curve used across reveals. */
 export const EASE_OUT = [0.22, 1, 0.36, 1] as const;

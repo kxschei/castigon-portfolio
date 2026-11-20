@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Anton, Plus_Jakarta_Sans } from "next/font/google";
 import SmoothScroll from "@/components/SmoothScroll";
-import Cursor from "@/components/Cursor";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -37,9 +36,7 @@ export const metadata: Metadata = {
 
 // Runs before first paint: saved choice → otherwise the OS setting. Prevents a
 // light-mode flash for dark-mode visitors. Must match ThemeToggle's logic.
-// Also marks <html data-intro-seen> when the preloader already played in this tab
-// (key = INTRO_SEEN_KEY in lib/data.ts), so it stays hidden instead of flashing.
-const themeScript = `(function(){try{var t=localStorage.getItem("theme");if(t!=="dark"&&t!=="light")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.setAttribute("data-theme",t)}catch(e){}try{if(sessionStorage.getItem("intro-seen"))document.documentElement.setAttribute("data-intro-seen","")}catch(e){}})()`;
+const themeScript = `(function(){try{var t=localStorage.getItem("theme");if(t!=="dark"&&t!=="light")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
@@ -54,7 +51,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       </head>
       <body className="isolate min-h-full bg-bg font-sans text-ink">
         <SmoothScroll>{children}</SmoothScroll>
-        <Cursor />
       </body>
     </html>
   );

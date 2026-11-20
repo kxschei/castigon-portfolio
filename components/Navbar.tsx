@@ -6,7 +6,7 @@ import { useLenis } from "lenis/react";
 import { LuMenu, LuX } from "react-icons/lu";
 import Logo from "@/components/Logo";
 import ThemeToggle from "@/components/ThemeToggle";
-import { EASE_OUT, getIntroDelay, navLinks, profile } from "@/lib/data";
+import { EASE_OUT, INTRO_DELAY, navLinks, profile } from "@/lib/data";
 
 const mobileList: Variants = {
   hidden: {},
@@ -21,7 +21,6 @@ const mobileItem: Variants = {
 export default function Navbar() {
   const lenis = useLenis();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [introDelay] = useState(getIntroDelay);
 
   const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, target: string) => {
     setMenuOpen(false);
@@ -43,7 +42,7 @@ export default function Navbar() {
       className="fixed inset-x-0 top-0 z-50 border-b border-line bg-bg/70 backdrop-blur-md"
       initial={{ y: -80 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.8, ease: EASE_OUT, delay: introDelay }}
+      transition={{ duration: 0.8, ease: EASE_OUT, delay: INTRO_DELAY }}
     >
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <motion.a
