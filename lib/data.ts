@@ -289,7 +289,7 @@ export const projects: Project[] = [
     tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
     // Visitors are already on the live site, so link to the source code
     href: "https://github.com/kxschei/castigon-portfolio",
-    images: ["/projects/portfolio-home.webp"],
+    images: ["/projects/portfolio-hero.webp"],
     built:
       "Light and dark themes with no flash on load, scroll-triggered animations, animated social icons, project slideshows, a printable one-page resume, and a contact form that delivers to my inbox through Web3Forms.",
   },
