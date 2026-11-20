@@ -7,12 +7,6 @@ import { SectionHeading } from "@/components/BentoAbout";
 import { EASE_OUT } from "@/lib/data";
 import { resume } from "@/lib/resume";
 
-const highlights = [
-  "BSIT · 2nd Year",
-  `${resume.certifications.length} Certifications`,
-  "Web · Mobile · Networking",
-];
-
 export default function ResumeSection() {
   return (
     <section id="resume" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-24 sm:px-6">
@@ -55,14 +49,6 @@ export default function ResumeSection() {
             A one-page summary of my education, experience, certifications, and skills. View it
             online or download a PDF copy.
           </p>
-
-          <ul className="mt-6 flex flex-wrap gap-2">
-            {highlights.map((h) => (
-              <li key={h} className="rounded-full border border-line bg-bg px-3.5 py-1.5 text-sm font-medium">
-                {h}
-              </li>
-            ))}
-          </ul>
 
           <div className="mt-8 flex flex-wrap gap-3">
             <motion.a
