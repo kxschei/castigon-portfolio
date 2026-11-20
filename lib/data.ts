@@ -89,7 +89,7 @@ export const contactChannels = [email, github, facebook];
 
 export const navLinks = [
   { label: "About", id: "about" },
-  { label: "Skills", id: "skills" },
+  { label: "TechStack", id: "skills" },
   { label: "Projects", id: "projects" },
   { label: "Education", id: "experience" },
   { label: "Certificates", id: "certificates" },
