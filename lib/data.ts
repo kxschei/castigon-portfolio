@@ -296,7 +296,8 @@ export const projects: Project[] = [
     description:
       "A responsive personal portfolio with light and dark modes, smooth-scroll animations, and a working contact form to showcase my skills, projects, and certificates.",
     tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
-    href: "#",
+    // Visitors are already on the live site, so link to the source code
+    href: "https://github.com/kxschei/castigon-portfolio",
     images: ["/projects/portfolio-home.webp"],
     built:
       "Light and dark themes with no flash on load, scroll-triggered animations, animated social icons, project slideshows, a printable one-page resume, and a contact form that delivers to my inbox through Web3Forms.",

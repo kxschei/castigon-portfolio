@@ -147,6 +147,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           {project.href && (
             <a
               href={project.href}
+              {...(project.href.startsWith("http") && { target: "_blank", rel: "noopener noreferrer" })}
               className="mt-6 inline-flex items-center gap-2 text-sm font-semibold"
             >
               View Project
