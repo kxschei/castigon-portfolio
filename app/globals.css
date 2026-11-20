@@ -122,6 +122,32 @@ html[data-intro-seen] .preloader {
   }
 }
 
+/* Tech stack strip (components/Skills.tsx): the track holds two identical rows and
+   slides left by one row's width, so it loops seamlessly. Edges fade out. */
+.marquee {
+  overflow: hidden;
+  padding-block: 4px; /* room for chip shadows */
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--marquee-duration, 45s) linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
 /* Lottie icons (components/MailLottie.tsx) take the surrounding text color.
    Only the visible artwork (svg > g) is recolored; masks/mattes live in <defs>
    and must keep their original fills. */

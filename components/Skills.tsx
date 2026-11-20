@@ -72,10 +72,63 @@ function SkillCard({
   );
 }
 
+// Every skill once, in card order, for the scrolling strip
+const stack = skillGroups
+  .flatMap((g) => g.skills)
+  .filter((s, i, all) => all.findIndex((t) => t.name === s.name) === i);
+
+/** One copy of the strip; rendered twice so the loop is seamless. */
+function StackRow() {
+  return (
+    <ul className="flex shrink-0 gap-3 pr-3">
+      {stack.map((skill) => {
+        const Icon = skill.icon;
+        return (
+          <li
+            key={skill.name}
+            className="flex items-center gap-2.5 whitespace-nowrap rounded-full border border-line bg-surface px-4 py-2.5 text-sm font-semibold shadow-sm"
+          >
+            <Icon className="size-5 shrink-0" style={skill.color ? { color: skill.color } : undefined} />
+            {skill.name}
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+/**
+ * Tech stack: an endlessly scrolling strip of every skill logo (pauses on hover,
+ * still for reduced motion — see .marquee in globals.css). Decorative: the cards
+ * below list the same skills for screen readers.
+ */
+function TechStack() {
+  return (
+    <motion.div
+      aria-hidden
+      className="mb-12"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.5 }}
+      transition={{ duration: 0.8, ease: EASE_OUT }}
+    >
+      <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-muted">Tech Stack</p>
+      <div className="marquee" style={{ "--marquee-duration": `${stack.length * 2.5}s` } as React.CSSProperties}>
+        <div className="marquee-track">
+          <StackRow />
+          <StackRow />
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function Skills() {
   return (
     <section id="skills" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-24 sm:px-6">
       <SectionHeading number="02" title="Skills & Technologies" />
+
+      <TechStack />
 
       <div className="grid gap-4 md:grid-cols-2">
         {skillGroups.map((group, i) => (
