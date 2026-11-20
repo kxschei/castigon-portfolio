@@ -177,13 +177,24 @@ export default function Hero() {
 
       {/* Right: portrait */}
       <motion.div
-        className="group relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-2xl border border-line bg-white shadow-md"
+        className="group relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-2xl border border-line bg-surface shadow-md"
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.2, ease: EASE_OUT, delay: introDelay + 0.3 }}
       >
+        {/* Accent glow behind the cut-out portrait (background removed from profile-hd.png) */}
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{
+            backgroundImage: [
+              "radial-gradient(55% 45% at 50% 40%, color-mix(in srgb, var(--color-accent) 30%, transparent), transparent 72%)",
+              "radial-gradient(90% 55% at 50% 105%, color-mix(in srgb, var(--color-accent) 22%, transparent), transparent 70%)",
+            ].join(", "),
+          }}
+        />
         <Image
-          src="/profile-hd.png"
+          src="/profile-cutout.webp"
           alt={`Portrait of ${profile.name}`}
           fill
           priority
