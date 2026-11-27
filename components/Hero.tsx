@@ -182,7 +182,7 @@ export default function Hero() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.2, ease: EASE_OUT, delay: introDelay + 0.3 }}
       >
-        <Portrait priority sizes="384px" />
+        <Portrait priority sizes="442px" />
       </motion.div>
     </section>
   );
