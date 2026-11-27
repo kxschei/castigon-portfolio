@@ -5,16 +5,6 @@ A responsive personal portfolio website that presents my background, technical s
 - **Live site:** https://cedrexportfolio.vercel.app
 - **Repository:** https://github.com/kxschei/castigon-portfolio
 
-| | |
-|---|---|
-| **Student** | Cedrex Castigon |
-| **Student Number** | [Student Number] |
-| **Program / Year** | BS Information Technology, 2nd Year |
-| **School** | Holy Cross of Davao College |
-| **Course** | [Course Code — Course Title] |
-| **Instructor** | [Instructor Name] |
-| **Date Submitted** | [Date] |
-
 ---
 
 ## Table of Contents
@@ -253,13 +243,12 @@ To deploy your own copy:
 
 ## Author
 
-**Cedrex Castigon**
-BS Information Technology, Holy Cross of Davao College
+**Cedrex Castigon** — BS Information Technology, Holy Cross of Davao College
 
 - GitHub: [@kxschei](https://github.com/kxschei)
-- Email: [your.email@example.com]
+- Email: [castigonlloyd@gmail.com](mailto:castigonlloyd@gmail.com)
 - Portfolio: https://cedrexportfolio.vercel.app
 
 ---
 
-© [Year] Cedrex Castigon. Created as a requirement for [Course Code — Course Title].
+© 2026 Cedrex Castigon
