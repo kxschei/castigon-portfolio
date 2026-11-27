@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
+import Portrait from "@/components/Portrait";
 import {
   EASE_OUT,
   aboutDetails,
@@ -61,6 +62,11 @@ export default function BentoAbout() {
         {/* Card 1 — About me: bio, details table, interests */}
         <Card index={0} className="flex flex-col justify-between md:col-span-2">
           <div>
+            {/* Portrait lives here on phones; desktop shows it in the hero */}
+            <div className="mx-auto mb-8 w-full max-w-[15rem] sm:max-w-xs md:hidden">
+              <Portrait sizes="(min-width: 640px) 320px, 240px" />
+            </div>
+
             <Label>About Me</Label>
 
             {/* 1. Bio */}

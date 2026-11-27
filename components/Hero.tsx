@@ -2,8 +2,8 @@
 
 import { motion, type Variants } from "framer-motion";
 import { useLenis } from "lenis/react";
-import Image from "next/image";
 import AnimatedIcon from "@/components/AnimatedIcon";
+import Portrait from "@/components/Portrait";
 import { EASE_OUT, INTRO_DELAY, profile, socials } from "@/lib/data";
 
 const GREETING = "Hi, I'm";
@@ -175,32 +175,14 @@ export default function Hero() {
         </motion.ul>
       </div>
 
-      {/* Right: portrait */}
+      {/* Right: portrait (desktop only; on phones it sits inside the About card) */}
       <motion.div
-        className="group relative mx-auto aspect-[4/5] w-full max-w-[15rem] overflow-hidden sm:max-w-xs md:max-w-sm rounded-2xl border border-line bg-surface shadow-md"
+        className="mx-auto hidden w-full max-w-sm md:block"
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.2, ease: EASE_OUT, delay: introDelay + 0.3 }}
       >
-        {/* Accent glow behind the cut-out portrait (background removed from profile-hd.png) */}
-        <div
-          aria-hidden
-          className="absolute inset-0"
-          style={{
-            backgroundImage: [
-              "radial-gradient(55% 45% at 50% 40%, color-mix(in srgb, var(--color-accent) 30%, transparent), transparent 72%)",
-              "radial-gradient(90% 55% at 50% 105%, color-mix(in srgb, var(--color-accent) 22%, transparent), transparent 70%)",
-            ].join(", "),
-          }}
-        />
-        <Image
-          src="/profile-cutout.webp"
-          alt={`Portrait of ${profile.name}`}
-          fill
-          priority
-          sizes="(min-width: 768px) 384px, (min-width: 640px) 320px, 240px"
-          className="object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
-        />
+        <Portrait priority sizes="384px" />
       </motion.div>
     </section>
   );
