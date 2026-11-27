@@ -5,6 +5,10 @@ const nextConfig: NextConfig = {
   experimental: {
     agentFeedback: true,
   },
+  images: {
+    // 90 is used for the portrait so it stays crisp; 75 is the default for everything else
+    qualities: [75, 90],
+  },
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {

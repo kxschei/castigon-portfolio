@@ -11,7 +11,7 @@ export default function Portrait({
 }) {
   return (
     <div className="group relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-line bg-surface shadow-md">
-      {/* Accent glow behind the cut-out portrait (background removed from profile-hd.png) */}
+      {/* Accent glow behind the transparent cut-out portrait */}
       <div
         aria-hidden
         className="absolute inset-0"
@@ -23,10 +23,11 @@ export default function Portrait({
         }}
       />
       <Image
-        src="/profile-cutout.webp"
+        src="/profile-cutout.png"
         alt={`Portrait of ${profile.name}`}
         fill
         priority={priority}
+        quality={90}
         sizes={sizes}
         className="object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
       />

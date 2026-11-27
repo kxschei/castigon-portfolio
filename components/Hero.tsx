@@ -78,7 +78,7 @@ export default function Hero() {
   return (
     <section
       id="top"
-      className="mx-auto grid min-h-svh max-w-6xl items-center gap-12 px-4 pb-16 pt-28 sm:px-6 md:grid-cols-[1.3fr_1fr] md:pt-16"
+      className="mx-auto grid max-w-6xl items-center gap-12 px-4 pb-4 pt-28 sm:px-6 md:min-h-svh md:grid-cols-[1.3fr_1fr] md:pb-16 md:pt-16"
     >
       {/* Left: cinematic headline */}
       <div>
