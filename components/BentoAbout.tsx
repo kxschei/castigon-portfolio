@@ -64,7 +64,7 @@ export default function BentoAbout() {
           <div>
             {/* Portrait lives here on phones; desktop shows it in the hero */}
             <div className="mx-auto mb-8 w-full max-w-[15rem] sm:max-w-xs md:hidden">
-              <Portrait sizes="(min-width: 640px) 368px, 276px" />
+              <Portrait sizes="(min-width: 640px) 320px, 240px" />
             </div>
 
             <Label>About Me</Label>
