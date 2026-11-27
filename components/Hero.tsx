@@ -177,12 +177,12 @@ export default function Hero() {
 
       {/* Right: portrait (desktop only; on phones it sits inside the About card) */}
       <motion.div
-        className="mx-auto hidden w-full max-w-sm md:block"
+        className="mx-auto hidden w-full max-w-md md:block"
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.2, ease: EASE_OUT, delay: introDelay + 0.3 }}
       >
-        <Portrait priority sizes="384px" />
+        <Portrait priority sizes="448px" />
       </motion.div>
     </section>
   );
