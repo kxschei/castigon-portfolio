@@ -177,7 +177,7 @@ export default function Hero() {
 
       {/* Right: portrait */}
       <motion.div
-        className="group relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-2xl border border-line bg-surface shadow-md"
+        className="group relative mx-auto aspect-[4/5] w-full max-w-[15rem] overflow-hidden sm:max-w-xs md:max-w-sm rounded-2xl border border-line bg-surface shadow-md"
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.2, ease: EASE_OUT, delay: introDelay + 0.3 }}
@@ -198,7 +198,7 @@ export default function Hero() {
           alt={`Portrait of ${profile.name}`}
           fill
           priority
-          sizes="(min-width: 768px) 384px, 90vw"
+          sizes="(min-width: 768px) 384px, (min-width: 640px) 320px, 240px"
           className="object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
         />
       </motion.div>
